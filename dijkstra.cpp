@@ -24,6 +24,9 @@ vector<int> dy{0, 1, 1, 1, 0, -1, -1, -1};
 vector<pair<int,int> > destPath;
 bool visited[n][n];
 
+// storing the min path cost
+int cost;
+
 // function to validate the current cocordinates
 bool isValid(int grid[n][n], int x, int y)
 {
@@ -32,7 +35,8 @@ bool isValid(int grid[n][n], int x, int y)
 
 void findPath(pair<int, int> previous[n][n], float distance[n][n], int xStart, int yStart, int xEnd, int yEnd)
 {
-    cout<<"the shortest distance from start to end is "<<distance[xEnd][yEnd]<<endl;
+    cost = distance[xEnd][yEnd];
+    cout<<"the shortest distance from start to end is "<<cost<<endl;
 
     // as long as destination is not reached, print the current coordinats
     while(previous[xEnd][yEnd].first != xStart || previous[xEnd][yEnd].second != yStart)
@@ -112,10 +116,10 @@ void dijkstra(int grid[n][n], int xStart, int yStart, int xEnd, int yEnd)
 
 int main(){
     int filled[n][n];       //whether cell is colored
-    int grid[60][60];       //map with obstacle
-    for(int i=0;i<60;i++)
-        for(int j=0;j<60;j++){
-            if(i==0||i==59||j==0||j==59)        //walls
+    int grid[n][n];       //map with obstacle
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++){
+            if(i==0||i==n-1||j==0||j==n-1)        //walls
                 grid[i][j]=0;
             else
                 grid[i][j]=1;
@@ -186,7 +190,7 @@ int main(){
         buttonStartD.setPosition(600,0);
         window.draw(buttonStartD);      //Dijkstra launch
         text1.setPosition(600,0);       //Dijkstra text
-        window.draw(text1);
+        window.draw(text1);     //cost text
         stringstream ss1,ss2;
         ss1<<destPath.size();       //int2string
         
@@ -224,6 +228,9 @@ int main(){
                     window.draw(rectangle);     //default white cells
                 }
             }
+        sf::Text text2("the cost is " + to_string(cost), font, 15);
+        text2.setPosition(600,30);       //cost text
+        window.draw(text2);
         window.display();
     }
     return 0;
