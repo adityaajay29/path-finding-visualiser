@@ -25,7 +25,7 @@ vector<pair<int,int> > destPath;
 bool visited[n][n];
 
 // storing the min path cost
-int cost;
+float cost;
 
 // function to validate the current cocordinates
 bool isValid(int grid[n][n], int x, int y)
